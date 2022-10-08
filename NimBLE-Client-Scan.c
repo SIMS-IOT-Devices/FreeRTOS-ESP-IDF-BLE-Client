@@ -59,7 +59,7 @@ void ble_app_scan(void)
 void ble_app_on_sync(void)
 {
     ble_hs_id_infer_auto(0, &ble_addr_type); // Determines the best address type automatically
-    ble_app_scan();                          // Define the BLE connection
+    ble_app_scan();                          
 }
 
 // The infinite task
@@ -72,9 +72,9 @@ void app_main()
 {
     nvs_flash_init();                               // 1 - Initialize NVS flash using
     esp_nimble_hci_and_controller_init();           // 2 - Initialize ESP controller
-    nimble_port_init();                             // 3 - Initialize the host stack
-    ble_svc_gap_device_name_set("BLE-Scan-Client"); // 4 - Initialize NimBLE configuration - server name
-    ble_svc_gap_init();                             // 4 - Initialize NimBLE configuration - gap service
-    ble_hs_cfg.sync_cb = ble_app_on_sync;           // 5 - Initialize application
-    nimble_port_freertos_init(host_task);           // 6 - Run the thread
+    nimble_port_init();                             // 3 - Initialize the controller stack
+    ble_svc_gap_device_name_set("BLE-Scan-Client"); // 4 - Set device name characteristic
+    ble_svc_gap_init();                             // 4 - Initialize GAP service
+    ble_hs_cfg.sync_cb = ble_app_on_sync;           // 5 - Set application
+    nimble_port_freertos_init(host_task);           // 6 - Set infinite task
 }
